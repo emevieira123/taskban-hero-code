@@ -1,7 +1,10 @@
-import { Heading } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import { Header } from "./components/Header";
 
 export default function Quadro() {
     return (
-        <Heading>Quadro</Heading>
+        <Flex w="100%">
+            <Header />
+        </Flex>
     );
 }
