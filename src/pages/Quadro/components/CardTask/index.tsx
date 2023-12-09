@@ -4,6 +4,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Flex, Text } from "@chakra-ui/react";
 import { IconRelogio } from "../../../../shared/icons/IconRelogio";
 import { format, isBefore, parseISO } from "date-fns";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 interface CardTaskProps {
   id: UniqueIdentifier;
@@ -11,6 +12,7 @@ interface CardTaskProps {
   description?: string;
   endDate?: string;
   priority?: number;
+  statusDone?: boolean;
 }
 
 export function CardTask(props: CardTaskProps) {
@@ -64,36 +66,48 @@ export function CardTask(props: CardTaskProps) {
         {props.description}
       </Text>
 
-      <Flex align="center" justify="space-between" mt="1.25rem">
-        <Flex
-          color={
-            isBefore(dataFinalizacao, dataAtual) ? "#FF7979" : ""
-          }
-          gap={2}
-        >
-          <IconRelogio />
-          <Text>{format(dataFinalizacao, 'dd/MM/yyyy')}</Text>
-        </Flex>
+      {
+        props.statusDone
+          ? (
+            <Flex align="center" mt="1.25rem" color="#2BA700" gap={2}>
+              <FaRegCheckCircle size="20" />
+              <Text>Finalizado</Text>
+            </Flex>
+          )
+          : (
+            <Flex align="center" justify="space-between" mt="1.25rem">
+              <Flex
+                color={
+                  isBefore(dataFinalizacao, dataAtual) ? "#FF7979" : ""
+                }
+                gap={2}
+              >
+                <IconRelogio />
+                <Text>{format(dataFinalizacao, 'dd/MM/yyyy')}</Text>
+              </Flex>
 
-        <Text
-          px="0.5rem"
-          border={`1px solid ${props.priority !== 2 && colorPriority(props.priority!)}`}
-          color={colorPriority(props.priority!)}
-          bg={props.priority === 2 ? "#FF7979" : ""}
-          borderRadius="1.25rem"
-          fontWeight="bold"
-        >
-          {
-            props.priority === 0
-              ? "LOW"
-              : (
-                props.priority === 1
-                  ? "MEDIUM"
-                  : "HIGH"
-              )
-          }
-        </Text>
-      </Flex>
+              <Text
+                px="0.5rem"
+                border={`1px solid ${props.priority !== 2 && colorPriority(props.priority!)}`}
+                color={colorPriority(props.priority!)}
+                bg={props.priority === 2 ? "#FF7979" : ""}
+                borderRadius="1.25rem"
+                fontWeight="bold"
+              >
+                {
+                  props.priority === 0
+                    ? "LOW"
+                    : (
+                      props.priority === 1
+                        ? "MEDIUM"
+                        : "HIGH"
+                    )
+                }
+              </Text>
+            </Flex>
+          )
+      }
+
     </Flex>
   );
 }

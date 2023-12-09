@@ -1,4 +1,4 @@
-import { Flex, Grid } from "@chakra-ui/react";
+import { Flex, Grid, useMediaQuery } from "@chakra-ui/react";
 import { CardTask } from "./components/CardTask";
 import { ContainerTasks } from "./components/ContainerTasks";
 import { Header } from "./components/Header";
@@ -46,11 +46,13 @@ export default function Quadro() {
     setActiveId(id);
   }
 
+  const [isLargerThanMD] = useMediaQuery('(max-width: 33.75rem)');
+
   return (
     <Flex w="100%" bg="#F1F0FF" flexDirection="column">
       <Header />
 
-      <Grid templateColumns="repeat(4, 1fr)" px="2rem" mt="5rem" gap="2.4rem">
+      <Grid templateColumns={isLargerThanMD ? "repeat(1, 1fr)" : "repeat(4, 1fr)"} px="2rem" mt="5rem" gap="2.4rem">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCorners}
@@ -60,7 +62,7 @@ export default function Quadro() {
         >
           <SortableContext items={containers.map((i) => i.id)}>
             {
-              containers.map((col) => (
+              containers.map((col, i) => (
                 <ContainerTasks id={col.id} key={col.id} title={col.title} qtdTasks={col.items.length || 0}>
                   <SortableContext items={col.items.map((i) => i.id)}>
                     {
@@ -72,6 +74,7 @@ export default function Quadro() {
                           description={task.description}
                           endDate={task.endDate}
                           priority={task.priority}
+                          statusDone={i === 3}
                         />
                       ))
                     }

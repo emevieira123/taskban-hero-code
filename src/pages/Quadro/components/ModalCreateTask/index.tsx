@@ -5,7 +5,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
+  useMediaQuery
 } from '@chakra-ui/react';
 import { useModal } from '../../hooks/useModal';
 import { FormModal } from '../FormModal';
@@ -20,6 +21,7 @@ export function ModalCreateTask({ isOpen }: { isOpen: boolean }) {
   const { control, handleSubmit, reset } = useForm<ItemProps>();
   const { selected, setSelected } = useSelectedPriority();
   const { onClose } = useModal();
+  const [isLargerThanMD] = useMediaQuery('(max-width: 33.75rem)');
 
   function onSubmit(data: ItemProps) {
     if (!data.title) return;
@@ -46,7 +48,7 @@ export function ModalCreateTask({ isOpen }: { isOpen: boolean }) {
           <FormModal control={control} />
         </ModalBody>
 
-        <ModalFooter>
+        <ModalFooter justifyContent={isLargerThanMD ? "center" : "end"}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Button
               border="1px solid #FF7979"

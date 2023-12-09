@@ -43,7 +43,18 @@ export function ContainerTasks(props: ContainerTasksProps) {
           <Text>({props.qtdTasks})</Text>
         </Flex>
 
-        <Flex flexDirection="column" gap={4}>
+        <Flex flexDirection="column" gap={4}
+          maxH="70vh"
+          overflowY="auto"
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "0.01em",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "rgba(0,0,0,0)",
+            },
+          }}
+        >
           {props.children}
         </Flex>
       </Flex>

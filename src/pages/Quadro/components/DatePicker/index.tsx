@@ -1,4 +1,4 @@
-import { Box, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, useDisclosure, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { DayPicker } from 'react-day-picker';
 import { Control, Controller } from "react-hook-form";
@@ -18,6 +18,7 @@ interface DatePickerProps {
 
 export function DatePicker({ label, control, dataTestid, placeholder, ...rest }: DatePickerProps) {
   const [selected, setSelected] = useState<Date>();
+  const [isLargerThanMD] = useMediaQuery('(max-width: 33.75rem)');
 
   const { onClose, isOpen, onOpen } = useDisclosure();
 
@@ -34,7 +35,7 @@ export function DatePicker({ label, control, dataTestid, placeholder, ...rest }:
   return (
     <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} placement='bottom-start'>
       <PopoverTrigger>
-        <Box>
+        <Box width={isLargerThanMD ? "100%" : "17rem"}>
           <InputGroup>
             <InputRightElement pointerEvents="none" color="#48409E">
               <IoCalendarClearSharp />
@@ -49,7 +50,6 @@ export function DatePicker({ label, control, dataTestid, placeholder, ...rest }:
                   <Input
                     placeholder={placeholder ?? "Selecione uma data"}
                     _placeholder={{ color: "#C4C4C4" }}
-                    width="16rem"
                     value={DateValidate(value)}
                     data-testid={dataTestid}
                     name={dataTestid}

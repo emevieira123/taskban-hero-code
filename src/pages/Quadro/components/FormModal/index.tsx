@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useMediaQuery } from "@chakra-ui/react";
 import { Control } from "react-hook-form";
 import { DatePicker } from "../DatePicker";
 import Input from "../Input";
@@ -11,6 +11,8 @@ interface FormProps {
 }
 
 export function FormModal({ control }: FormProps) {
+  const [isLargerThanMD] = useMediaQuery('(max-width: 33.75rem)');
+
   return (
     <Flex flexDirection="column" gap={6}>
       <Input
@@ -25,7 +27,7 @@ export function FormModal({ control }: FormProps) {
         placeholder="Digite a descrição"
         control={control}
       />
-      <Flex align="center" justify="space-between" gap={10}>
+      <Flex align="center" justify="space-between" gap={10} flexDirection={isLargerThanMD ? "column" : "initial"}>
         <DatePicker
           label="Data final"
           control={control}
