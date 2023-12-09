@@ -36,7 +36,7 @@ export function Sidebar() {
               bg="#48409E"
               color="white"
               borderRadius="50%"
-              _hover={{ bg: "blue.200" }}
+              _hover={{ bg: "purple.700" }}
               style={{ rotate: open ? "180deg" : "" }}
               onClick={() => setOpen(!open)}
             />

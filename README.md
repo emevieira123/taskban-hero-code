@@ -8,6 +8,10 @@ This project was developed as part of a challenge proposed by Hero Code, aiming 
 
 The challenge was designed with the intention of simulating a technical test commonly found in job interview selection processes. Approaching this challenge must reflect the same dedication and skills as in a real professional interview situation. The aim is to provide an opportunity to demonstrate technical, practical knowledge and the aptitude to deal with tasks related to front-end development.
 
+## Challenge information
+
+- For more information about the challenge [click here](https://github.com/emevieira123/taskban-hero-code/tree/main/DESAFIO).
+
 ## Technologies used for development
 
 - [React with vite and typescript](https://vitejs.dev/)
@@ -59,7 +63,9 @@ yarn build
 
 Builds the application to the build folder.
 
-<!-- <b>`Observation:`</b> Some features are still being developed, but it is now possible to test the application. Feel free to register and test the application. -->
+## Vercel Deployment
+
+- [Click here](https://taskban-xi.vercel.app/) to see the project in progress
 
 ## Info Configuration Vite
 
