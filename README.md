@@ -1,7 +1,5 @@
 # Taskban - Tech Challenge Hero Code
 
-</br>
-
 # About the project
 
 ## Description
