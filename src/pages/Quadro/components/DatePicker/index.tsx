@@ -36,7 +36,7 @@ export function DatePicker({ label, control, dataTestid, placeholder, errors, ..
   return (
     <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} placement='bottom-start'>
       <PopoverTrigger>
-        <Box>
+        <Box width={isLargerThanMD ? "100%" : "17rem"}>
           <Box width={isLargerThanMD ? "100%" : "17rem"}>
             <InputGroup>
               <InputRightElement pointerEvents="none" color="#48409E">
