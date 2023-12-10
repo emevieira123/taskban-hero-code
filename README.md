@@ -22,7 +22,7 @@ The challenge was designed with the intention of simulating a technical test com
 - [DND-KIT](https://docs.dndkit.com/)
 - [Date-fns](https://date-fns.org/)
 - [Chakra UI](https://chakra-ui.com/)
-- [Zustand](https://github.com/pmndrs/zustand)
+- [Zustand](https://zustand-demo.pmnd.rs/)
 - [UUID](https://github.com/uuidjs/uuid#readme)
 
 </br>
