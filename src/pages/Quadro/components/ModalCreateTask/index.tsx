@@ -8,17 +8,17 @@ import {
   ModalOverlay,
   useMediaQuery
 } from '@chakra-ui/react';
-import { useModal } from '../../hooks/useModal';
-import { FormModal } from '../FormModal';
 import { useForm } from 'react-hook-form';
-import { useSelectedPriority } from '../../hooks/useSelectPriority';
-import { ItemProps } from '../../types/item';
 import { v4 as uuidv4 } from 'uuid';
 import { useContainersTasks } from '../../hooks/useContainersTasks';
+import { useModal } from '../../hooks/useModal';
+import { useSelectedPriority } from '../../hooks/useSelectPriority';
+import { ItemProps } from '../../types/item';
+import { FormModal } from '../FormModal';
 
 export function ModalCreateTask({ isOpen }: { isOpen: boolean }) {
   const { containers, setContainers } = useContainersTasks();
-  const { control, handleSubmit, reset } = useForm<ItemProps>();
+  const { control, handleSubmit, reset, formState: { errors } } = useForm<ItemProps>();
   const { selected, setSelected } = useSelectedPriority();
   const { onClose } = useModal();
   const [isLargerThanMD] = useMediaQuery('(max-width: 33.75rem)');
@@ -39,13 +39,19 @@ export function ModalCreateTask({ isOpen }: { isOpen: boolean }) {
     setSelected(undefined)
   }
 
+  function onCancel() {
+    onClose();
+    reset();
+    setSelected(undefined)
+  }
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="2xl">
+    <Modal isOpen={isOpen} onClose={onCancel} size="2xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader color="#48409E">Novo Card</ModalHeader>
         <ModalBody>
-          <FormModal control={control} />
+          <FormModal control={control} errors={errors} />
         </ModalBody>
 
         <ModalFooter justifyContent={isLargerThanMD ? "center" : "end"}>
@@ -57,7 +63,7 @@ export function ModalCreateTask({ isOpen }: { isOpen: boolean }) {
               _hover={{ bg: "transparent" }}
               borderRadius="1.25rem"
               mr={3}
-              onClick={onClose}
+              onClick={onCancel}
             >
               CANCELAR
             </Button>

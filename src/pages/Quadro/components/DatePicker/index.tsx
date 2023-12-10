@@ -1,7 +1,7 @@
-import { Box, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, useDisclosure, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Text, useDisclosure, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { DayPicker } from 'react-day-picker';
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import { format } from 'date-fns';
 import { ptBR, } from 'date-fns/locale';
@@ -14,9 +14,10 @@ interface DatePickerProps {
   dataTestid?: string;
   placeholder?: string;
   control: Control<ItemProps>;
+  errors: FieldErrors<ItemProps>
 }
 
-export function DatePicker({ label, control, dataTestid, placeholder, ...rest }: DatePickerProps) {
+export function DatePicker({ label, control, dataTestid, placeholder, errors, ...rest }: DatePickerProps) {
   const [selected, setSelected] = useState<Date>();
   const [isLargerThanMD] = useMediaQuery('(max-width: 33.75rem)');
 
@@ -35,44 +36,52 @@ export function DatePicker({ label, control, dataTestid, placeholder, ...rest }:
   return (
     <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} placement='bottom-start'>
       <PopoverTrigger>
-        <Box width={isLargerThanMD ? "100%" : "17rem"}>
-          <InputGroup>
-            <InputRightElement pointerEvents="none" color="#48409E">
-              <IoCalendarClearSharp />
-            </InputRightElement>
-            <Controller
-              name="endDate"
-              control={control}
-              {...rest}
-              defaultValue=""
-              render={({ field: { value } }) => {
-                return (
-                  <Input
-                    placeholder={placeholder ?? "Selecione uma data"}
-                    _placeholder={{ color: "#C4C4C4" }}
-                    value={DateValidate(value)}
-                    data-testid={dataTestid}
-                    name={dataTestid}
-                    type="text"
-                    readOnly
-                  />
-                )
-              }
-              }
-            />
-          </InputGroup>
-          <FormLabel
-            position="absolute"
-            fontWeight="normal"
-            fontSize="0.75rem"
-            mt="-3.3rem"
-            ml="0.5rem"
-            color="#6F6F6F"
-            bg="white"
-            px="0.2rem"
-          >
-            {label}
-          </FormLabel>
+        <Box>
+          <Box width={isLargerThanMD ? "100%" : "17rem"}>
+            <InputGroup>
+              <InputRightElement pointerEvents="none" color="#48409E">
+                <IoCalendarClearSharp />
+              </InputRightElement>
+              <Controller
+                name="endDate"
+                control={control}
+                rules={{ required: "A data final é obrigatória" }}
+                {...rest}
+                defaultValue=""
+                render={({ field: { value } }) => {
+                  return (
+                    <Input
+                      placeholder={placeholder ?? "Selecione uma data"}
+                      _placeholder={{ color: "#C4C4C4" }}
+                      value={DateValidate(value)}
+                      data-testid={dataTestid}
+                      name={dataTestid}
+                      type="text"
+                      readOnly
+                      border={errors.endDate && "2px solid #DD514B"}
+                    />
+                  )
+                }
+                }
+              />
+            </InputGroup>
+            <FormLabel
+              position="absolute"
+              fontWeight="normal"
+              fontSize="0.75rem"
+              mt="-3.3rem"
+              ml="0.5rem"
+              color="#6F6F6F"
+              bg="white"
+              px="0.2rem"
+            >
+              {label}
+            </FormLabel>
+          </Box>
+          {
+            errors.endDate &&
+            <Text color="#DD514B" fontSize="0.9rem">{errors.endDate?.message}</Text>
+          }
         </Box>
       </PopoverTrigger>
       <PopoverContent>
